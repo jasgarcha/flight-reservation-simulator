@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Ticket {
 	private final int ticketNumber; 
-	private Airline myAirline; 
-	private Passenger myPassenger;
-	private Flight myFlight;
-	private double price;
+	private final Airline myAirline;
+	private final Passenger myPassenger;
+	private final Flight myFlight;
+	private final double price;
 	private static int counter = 0;	
 	
 	public Ticket() {
@@ -60,9 +60,7 @@ public class Ticket {
 	}
 	
 	public String toString() {
-		String s = myAirline.toString();
-		s = s.substring(0, s.length() - 1);
-		return "\nTicket #: " + ticketNumber +
+        return "\nTicket #: " + ticketNumber +
 				"\n" + myAirline +				 
 				myFlight + 
 				"Price: $" + price + "\n";

@@ -2,25 +2,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Airline {
-	public static final  String NAME = "CS212 Airlines";
+	public static final  String NAME = "Airline Reservation Simulator";
 	public static final String[] CITIES = {"New York City", "Albany", "Buffalo", "Syracuse"};
 	public static final String[] AIRPORTS = {"LGA", "ALB", "BUF", "SYR"};	
-	private ArrayList<Flight> flights;
+	private final ArrayList<Flight> flights;
 	
 	public Airline() {
-		flights = new ArrayList<Flight>();
+		flights = new ArrayList<>();
 	}
 	
-	void createFlight(double time, int numSeats, String from, String to) {
-		flights.add(new Flight(this, numSeats, time, from, to));
+	void createFlight(double time, int numberOfSeats, String from, String to) {
+		flights.add(new Flight(this, numberOfSeats, time, from, to));
 	}
 	
 	ArrayList<Flight> findFlights(String date, double time, String origin, String to) {
-		ArrayList<Flight> myflights = new ArrayList<Flight>();
+		ArrayList<Flight> myFlights = new ArrayList<Flight>();
 		for(Flight f: flights)
 			if(f.matches(date, time, origin, to))
-				myflights.add(f);
-		return myflights;
+				myFlights.add(f);
+		return myFlights;
 	}
 
 	public Flight getRandomFlight() {
@@ -32,8 +32,8 @@ public class Airline {
 	}
 	
 	public void setFlightDates(String day) {
-		for(int i = 0; i < flights.size(); i++)
-			flights.get(i).setDate(day);
+        for (Flight flight : flights) 
+			flight.setDate(day);
 	}
 	
 	Ticket book(Passenger p, Flight f) {

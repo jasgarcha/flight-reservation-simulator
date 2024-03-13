@@ -1,8 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class SimpleAirlineReservationSimulator {
-	public static void main(String args[]) {	
+public class AirlineReservationSimulator {
+	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		Airline passengerAirline;
 		Passenger passenger;
@@ -18,7 +18,7 @@ public class SimpleAirlineReservationSimulator {
 		passengerAirline = new Airline();		
 		generateFlights(passengerAirline);		
 		
-		Passenger passengers[] = new Passenger[10000];
+		Passenger[] passengers = new Passenger[10000];
 		for(int i = 0; i < passengers.length; i++) {
 			passengers[i] = new Passenger();
 			passengers[i].bookFlight(passengerAirline.getRandomFlight());
@@ -44,7 +44,7 @@ public class SimpleAirlineReservationSimulator {
 		System.out.println("Enter your address: ");
 		address = input.nextLine().trim();		
 		while(!valid) {
-			if(address == null || address.isEmpty()) {
+			if(address.isEmpty()) {
 				System.out.println("Invalid address. Enter your address: ");
 				address = input.nextLine().trim();		
 			}
@@ -56,7 +56,7 @@ public class SimpleAirlineReservationSimulator {
 		System.out.println("Enter your phone #(10 digits, XXXXXXXXXX): ");
 		phoneNumber = input.nextLine().trim();	
 		while(!valid) {
-			if(phoneNumber != null && !phoneNumber.isEmpty() && phoneNumber.length() == 10) 
+			if(phoneNumber.length() == 10)
 				if(isStringNumeric(phoneNumber))
 						valid = true;
 			if(!valid) {
@@ -72,13 +72,13 @@ public class SimpleAirlineReservationSimulator {
 		System.out.println("Hi, " + name + "!");
 		System.out.println("Do you want to book or cancel a flight? Yes or no?");
 		String yesNo = input.nextLine().trim();		
-		while(yesNo.equalsIgnoreCase("yes")) {			
+		while(yesNo.equalsIgnoreCase("yes") || yesNo.equalsIgnoreCase("Yes") || yesNo.equalsIgnoreCase("y") || yesNo.equalsIgnoreCase("Y")  ) {
 			System.out.println("Enter C to cancel or anything else to book: ");
 			if(input.nextLine().trim().equalsIgnoreCase("C")) {
 				if(passenger.getMyTickets() == null || passenger.getMyTickets().isEmpty()) {
 					System.out.println("You do not have any tickets to cancel.");
 					System.out.println("Do you want to book or cancel a flight? Yes or no?");
-					yesNo = input.nextLine(); 
+					yesNo = input.nextLine();
 				}
 				else {
 					System.out.println("Here are your tickets: " + passenger.getMyTickets());
@@ -112,8 +112,10 @@ public class SimpleAirlineReservationSimulator {
 				origin = input.nextLine();	
 				while(!valid) {	
 					for(String ports : Airline.AIRPORTS) {
-						if(origin.equalsIgnoreCase(ports))
-							valid = true;
+                        if (origin.equalsIgnoreCase(ports)) {
+                            valid = true;
+                            break;
+                        }
 					}
 					if(!valid) {
 						System.out.println("Invalid airport name. Where are you flying from? ");
@@ -168,66 +170,66 @@ public class SimpleAirlineReservationSimulator {
 				valid = false;
 				
 				System.out.println("Enter your desired departure hour (1-24): "); 
-				String stime = input.nextLine();
+				String departureTime = input.nextLine();
 				while(!valid) {
-					if(isStringNumeric(stime)) {
-						if(Double.parseDouble(stime) >= 1 && Double.parseDouble(stime) <= 24) {
-							time = Double.parseDouble(stime);
+					if(isStringNumeric(departureTime)) {
+						if(Double.parseDouble(departureTime) >= 1 && Double.parseDouble(departureTime) <= 24) {
+							time = Double.parseDouble(departureTime);
 							valid = true;
 						} 
 						else {
 							System.out.println("Invalid hour. Enter your desired departure hour(1-24): ");
-							stime = input.nextLine();
+							departureTime = input.nextLine();
 						}
 					}
 					else {
 						System.out.println("Invalid hour. Enter your desired departure hour(1-24): ");
-						stime = input.nextLine();
+						departureTime = input.nextLine();
 					}
 				}
 				valid = false; 
 				
-				ArrayList<Flight> passengerflights = passengerAirline.findFlights(day, time, origin, destination);
-				if(passengerflights.isEmpty()) {
+				ArrayList<Flight> passengerFlights = passengerAirline.findFlights(day, time, origin, destination);
+				if(passengerFlights.isEmpty()) {
 					System.out.println("There are no available flights for those parameters.");
 					input.nextLine();
-					System.out.println("Do you want to book or cancel a flight? Yes or no?");							
+					System.out.println("Do you want to book or cancel a flight? Yes or no?");
 					yesNo = input.nextLine();
-				} 
+				}
 				else {
-					System.out.print("Available flights: " + passengerflights);	
-					int flightNumber = 0;
+					System.out.print("Available flights: " + passengerFlights);
+					int flightNumber;
 					System.out.println("Which flight do you want to book? Enter the flight #:");
 					String sfn = input.nextLine();
 					if(isStringNumeric(sfn)) {
 						flightNumber = Integer.parseInt(sfn);				
-						if(Flight.getIndexOfFlightNumber(passengerflights, flightNumber) < 0) {
+						if(Flight.getIndexOfFlightNumber(passengerFlights, flightNumber) < 0) {
 							System.out.println("That is not a valid flight number.");
-							System.out.println("Do you want to book or cancel a flight? Yes or no?");					
+							System.out.println("Do you want to book or cancel a flight? Yes or no?");
 							yesNo = input.nextLine();
 						}
 						else {
 							if(passenger.holdsFlight(flightNumber)) {
 								System.out.println("You are already booked for that flight!");
-								System.out.println("Do you want to book or cancel a flight? Yes or no?");					
+								System.out.println("Do you want to book or cancel a flight? Yes or no?");
 								yesNo = input.nextLine();
 							}
 							else {
-								passenger.bookFlight(passengerflights.get(Flight.getIndexOfFlightNumber(passengerflights, flightNumber)));
+								passenger.bookFlight(passengerFlights.get(Flight.getIndexOfFlightNumber(passengerFlights, flightNumber)));
 								System.out.println("Booked!");
-								System.out.println("Do you want to book or cancel a flight? Yes or no?");					
+								System.out.println("Do you want to book or cancel a flight? Yes or no?");
 								yesNo = input.nextLine();
 							}
 						}
 					}
 					else {
 						System.out.println("That is not a valid flight number.");
-						System.out.println("Do you want to book or cancel a flight? Yes or no?");							
+						System.out.println("Do you want to book or cancel a flight? Yes or no?");
 						yesNo = input.nextLine();
 					}
 				}
 			}
-		}		
+		}
 		System.out.println("Thank you for flying with " + Airline.NAME + "!");
 		System.out.print("Here is a list of your bookings: " + passenger.getMyTickets());
 		input.close();		
@@ -246,7 +248,7 @@ public class SimpleAirlineReservationSimulator {
 			a.createFlight(time, 0, "BUF", "SYR");
 			a.createFlight(time, 0, "SYR", "LGA");
 			a.createFlight(time, 0, "SYR", "ALB");
-			a.createFlight(time, 0, "SYR", "BUF");	
+			a.createFlight(time, 0, "SYR", "BUF");
 		}
 	}	
 	

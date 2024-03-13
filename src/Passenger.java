@@ -2,17 +2,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Passenger {
-	private String firstName;
-	private String lastName;
+	private final String firstName;
+	private final String lastName;
 	private String address;
 	private String phoneNumber;
-	private ArrayList<Ticket> myTickets = new ArrayList<Ticket>();
-	private final String[] firstNames = {"Aragorn", "Gandalf", "Frodo", "Legolas", "Samwise", "Mitchell", "Gustavo", "Nash", "Ayla", 
-										  "Shea", "Ariel", "Jorge", "Parker", "Rebekah", "Campbell", "Angela", "Adelaide", "Randall", "George", "Dean"};
-	private final String[] lastNames = {"Thomas", "Lynn", "Mack", "Blackwell", "Fowler", "Harper", "Adams", "Wallace", "Pierce", "Walters", 
-										 "Chung", "Petty", "Rice", "Velez", "Shields", "Hahn", "Simpson", "Daniels",	"Gillespie", "Chandler"};
-	
-	public Passenger(String f, String l, String a, String p) {
+	private final ArrayList<Ticket> myTickets = new ArrayList<>();
+
+    public Passenger(String f, String l, String a, String p) {
 		firstName = f;
 		lastName = l;
 		address = a;
@@ -21,10 +17,14 @@ public class Passenger {
 	
 	public Passenger() {
 		Random r = new Random();
-		firstName = firstNames[r.nextInt(firstNames.length)];
-		lastName = lastNames[r.nextInt(lastNames.length)];
+        String[] firstNames = {"Aragorn", "Gandalf", "Frodo", "Legolas", "Samwise", "Mitchell", "Gustavo", "Nash", "Ayla",
+                "Shea", "Ariel", "Jorge", "Parker", "Rebekah", "Campbell", "Angela", "Adelaide", "Randall", "George", "Dean"};
+        firstName = firstNames[r.nextInt(firstNames.length)];
+        String[] lastNames = {"Thomas", "Lynn", "Mack", "Blackwell", "Fowler", "Harper", "Adams", "Wallace", "Pierce", "Walters",
+                "Chung", "Petty", "Rice", "Velez", "Shields", "Hahn", "Simpson", "Daniels", "Gillespie", "Chandler"};
+        lastName = lastNames[r.nextInt(lastNames.length)];
 		address = r.nextInt(100)+1 + " " + r.nextInt(100)+1 + "th Street.";
-		phoneNumber = Integer.toString(r.nextInt(99999) + 10000)+Integer.toString(r.nextInt(99999) + 10000); //10 digits.		
+		phoneNumber = Integer.toString(r.nextInt(99999) + 10000)+Integer.toString(r.nextInt(99999) + 10000); //10 digits.
 	}
 
 	public ArrayList<Ticket> getMyTickets() {

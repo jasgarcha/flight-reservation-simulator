@@ -2,17 +2,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Flight {
-	private Airline airline;
+	private final Airline airline;
 	private final int flightNumber;
 	private final int seats;
 	private int filledSeats;
-	private String origin;
-	private String destination;
+	private final String origin;
+	private final String destination;
 	private String date;
 	private double departureTime;
 	private double arrivalTime;
 	private double flightLength;	
-	private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+	private final ArrayList<Ticket> tickets = new ArrayList<>();
 	private static int counter = 0;	
 	
 	public Flight() {
@@ -34,11 +34,11 @@ public class Flight {
 		counter++;
 	}
 	
-	public Flight(Airline a, int numSeats, double time, String from, String to) {
+	public Flight(Airline a, int numberOfSeats, double time, String from, String to) {
 		seats = 150;
 		flightNumber = 1000+counter;		
 		airline = a;
-		filledSeats += numSeats;
+		filledSeats += numberOfSeats;
 		departureTime = time;
 		origin = from;
 		destination = to;
@@ -138,7 +138,7 @@ public class Flight {
 	}
 
 	public String toString() {
-		return "\nDate: August " + date + ", 2017." +
+		return "\nDate:" +
 				"\nFlight #: " + flightNumber + 
 				"\nDeparting airport: " + origin +
 				"\nArriving airport: " + destination + 
